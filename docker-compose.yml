@@ -1,0 +1,10 @@
+services:
+  github-runner:
+    build: .
+    container_name: github-runner
+    environment:
+      RUNNER_NAME: ${RUNNER_NAME}
+      RUNNER_URL: ${RUNNER_URL}
+      RUNNER_TOKEN: ${RUNNER_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
