@@ -2,6 +2,7 @@ services:
   github-runner:
     build: .
     container_name: github-runner
+    restart: unless-stopped
     environment:
       RUNNER_NAME: ${RUNNER_NAME}
       RUNNER_URL: ${RUNNER_URL}
