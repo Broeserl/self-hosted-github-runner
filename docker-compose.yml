@@ -7,5 +7,9 @@ services:
       RUNNER_NAME: ${RUNNER_NAME}
       RUNNER_URL: ${RUNNER_URL}
       RUNNER_TOKEN: ${RUNNER_TOKEN}
+      # Kommagetrennte Labels, z.B. self-hosted,linux,x64,rust
+      RUNNER_LABELS: ${RUNNER_LABELS:-self-hosted,linux,x64}
+      # 1 = frischer Runner-Zustand pro Job (empfohlen fuer public repos)
+      RUNNER_EPHEMERAL: ${RUNNER_EPHEMERAL:-}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

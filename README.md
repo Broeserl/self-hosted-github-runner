@@ -155,3 +155,24 @@ Re‑register the runner:
 - This repository contains **no project‑specific build logic**
 - It provides **CI infrastructure only**
 - Project‑specific Dockerfiles and devcontainers belong in the respective project repositories
+
+## 🔐 Security
+
+A self‑hosted runner executes workflow code **on this machine**. Use it
+**only for private repositories** (or trusted contributors): in public
+repos, anyone opening a PR can run arbitrary code on the runner and its
+host. For private repos, consider `RUNNER_EPHEMERAL=1` for a clean state
+per job. The Docker socket mount gives jobs full Docker access — the VM is
+the security boundary, so keep the runner on a dedicated VM.
+
+## 🏷️ Labels
+
+Jobs select this runner via labels from `.env`:
+
+```yaml
+runs-on: [self-hosted, linux, x64]
+```
+
+Labels are set during initial registration only — after changing
+`RUNNER_LABELS`, remove the container (`docker compose down`) and the
+runner's state volume, then start again.
