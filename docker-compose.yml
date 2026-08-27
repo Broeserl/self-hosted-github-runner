@@ -20,6 +20,11 @@ services:
       # Image-Dateien (config.sh/run.sh/bin) automatisch hinein.
       # Achtung: das offizielle Image legt sie direkt in /home/runner ab.
       - runner-state:/home/runner
+    # Socket-Zugriff fuer den Container-User: GID der docker-Gruppe der VM
+    # (ermitteln: stat -c '%g' /var/run/docker.sock). Ohne group_add:
+    # "permission denied while trying to connect to the docker API".
+    group_add:
+      - ${DOCKER_GID:-999}
 
 volumes:
   runner-state:
