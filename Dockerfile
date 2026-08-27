@@ -5,6 +5,8 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     curl \
     gnupg \
+    # C-Compiler fuer Rust/C/C++-Builds (build-scripts brauchen `cc`)
+    build-essential \
  && rm -rf /var/lib/apt/lists/*
 
 # docker-CLI (NUR Client — der Daemon bleibt der Host, Socket wird gemountet).
