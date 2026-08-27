@@ -1,7 +1,9 @@
 services:
   github-runner:
     build: .
-    container_name: github-runner
+    # Container-Name aus der Env: CONTAINER_NAME > RUNNER_NAME > github-runner.
+    # Mehrere Runner auf einer VM = mehrere Repo-Klone mit eigener .env.
+    container_name: ${CONTAINER_NAME:-${RUNNER_NAME:-github-runner}}
     restart: unless-stopped
     environment:
       RUNNER_NAME: ${RUNNER_NAME}

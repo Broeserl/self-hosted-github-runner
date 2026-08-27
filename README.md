@@ -176,3 +176,21 @@ runs-on: [self-hosted, linux, x64]
 Labels are set during initial registration only — after changing
 `RUNNER_LABELS`, remove the container (`docker compose down`) and the
 runner's state volume, then start again.
+
+## ➕ Multiple runners on one VM
+
+Clone this repository once per runner (each clone = its own `.env`):
+
+```bash
+git clone https://github.com/Broeserl/self-hosted-github-runner runner-1
+git clone https://github.com/Broeserl/self-hosted-github-runner runner-2
+# je Verzeichnis: cp .env.template .env, RUNNER_NAME=pi-runner-0X setzen
+# (CONTAINER_NAME optional — Default ist der RUNNER_NAME), dann:
+cd runner-1 && docker compose up -d
+cd runner-2 && docker compose up -d
+```
+
+Der Container-Name kommt aus `CONTAINER_NAME` (sonst `RUNNER_NAME`, sonst
+`github-runner`) — **lowercase, nur `[a-zA-Z0-9_.-]`**. Jeder Runner
+registriert sich mit eigenem Namen + eigenem Token bei GitHub; für
+verschiedene Repos einfach `RUNNER_URL` pro Clone anpassen.
