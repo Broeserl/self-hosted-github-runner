@@ -177,6 +177,21 @@ Labels are set during initial registration only — after changing
 `RUNNER_LABELS`, remove the container (`docker compose down`) and the
 runner's state volume, then start again.
 
+## 🔄 Runner-State (Volume)
+
+Der Runner-State (Registrierung `.runner` + Job-Workspaces `_work`) liegt in
+einem **Named Volume** (`runner-state` auf `/home/runner`). Beim ersten Start
+kopiert Docker die Image-Dateien automatisch hinein.
+
+Folgen:
+
+- `docker restart` / `docker compose restart`: State bleibt, **kein Token nötig**
+- `docker compose up -d --build` (Image-Update), Env-Änderungen: Container
+  wird neu erstellt, die **Registrierung bleibt im Volume erhalten** —
+  kein neuer Token nötig
+- Nur wenn das Volume gelöscht wird (`docker compose down -v`) oder der
+  Runner in der GitHub-UI entfernt wurde: neue Registrierung + frischer Token
+
 ## ➕ Multiple runners on one VM
 
 Clone this repository once per runner (each clone = its own `.env`):

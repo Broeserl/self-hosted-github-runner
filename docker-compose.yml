@@ -15,3 +15,11 @@ services:
       RUNNER_EPHEMERAL: ${RUNNER_EPHEMERAL:-}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      # State-Volume: Registrierung (.runner) + Job-Workspaces ueberleben
+      # Container-Neuerstellungen. Beim ersten Mount kopiert Docker die
+      # Image-Dateien (config.sh/run.sh/bin) automatisch hinein.
+      # Achtung: das offizielle Image legt sie direkt in /home/runner ab.
+      - runner-state:/home/runner
+
+volumes:
+  runner-state:
